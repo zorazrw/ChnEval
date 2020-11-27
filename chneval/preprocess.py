@@ -1,6 +1,7 @@
 # -*- encoding:utf-8 -*-
 """
 Data Pre-process for BERT
+
 @author: Zhiruo Wang
 """
 

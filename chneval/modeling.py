@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Modeling BERT, MLM, SBO, SOP
+Modeling BERT, MLM, SBO, SOP classes
 
 @author: Zhiruo Wang
 """
@@ -208,9 +208,9 @@ class BertLMPredictionHead(nn.Module):
     def __init__(self, config):
         super(BertLMPredictionHead, self).__init__()
         self.transform = BertPredictionHeadTransform(config)
-        self.decoder = nn.Linear(config.hidden_size, config.vocab_size, bias=True)
-        # self.bias = nn.Parameter(torch.zeros(config.vocab_size))
-        # self.decoder.bias = self.bias
+        self.decoder = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self.bias = nn.Parameter(torch.zeros(config.vocab_size))
+        self.decoder.bias = self.bias
 
     def forward(self, hidden_states):
         hidden_states = self.transform(hidden_states)
@@ -222,7 +222,7 @@ class SBOPredictionHead(nn.Module):
     def __init__(self, config):
         super(SBOPredictionHead, self).__init__()
         self.transform = BertPredictionHeadTransform(config)
-        self.decoder = nn.Linear(2 * config.hidden_size, config.vocab_size, bias=True)
+        self.decoder = nn.Linear(2 * config.hidden_size, config.vocab_size, bias=False)
 
     def forward(self, hidden_states, mlm_labels):
         hidden_states = self.transform(hidden_states)
@@ -258,9 +258,9 @@ class Model(nn.Module):
     def __init__(self, config):
         super(Model, self).__init__()
     
-    def init_weights(self, model_path):
+    def init_weights(self, model_path, strict=False):
         if model_path:
-            self.load_state_dict(torch.load(model_path), strict=True)
+            self.load_state_dict(torch.load(model_path), strict=strict)
             print("Parameters initiated from {}".format(model_path))
         else:
             for n,p in list(self.named_parameters()):
@@ -385,9 +385,9 @@ class MlmForPreTraining(PreTrain):
 # sbo class
 class SboForPreTraining(PreTrain):
     def __init__(self, config):
-        super(SboForPreTraining, self).__init__()
-        self.bert = MlmModel(config)
-        self.mlm_head = BertLMPredictionHead(config)
+        PreTrain.__init__(self, config)
+        # self.bert = MlmModel(config)
+        # self.mlm_head = BertLMPredictionHead(config)
         self.sbo_head = SBOPredictionHead(config)
         self.loss_fct = nn.CrossEntropyLoss()
         self.init_weights_loose(config.pretrained_model_path)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Downstream Predictors
+Downstream Predictors for Cloze and Multi-Choice Prediction (MCP) probes
 
 @author: Zhiruo Wang
 """
@@ -12,6 +12,7 @@ import chneval.modeling as md
 
 
 
+# %% Cloze predictors
 def get_score(indices, labels):
     assert(indices.size()[0] == labels.size()[0])
     scores = (indices == labels).long()
@@ -19,8 +20,7 @@ def get_score(indices, labels):
     scores = torch.sum(scores, dim=0)
     return scores
 
-
-
+    
 class BertPredictor(md.Model):
     def __init__(self, model):
         super(md.Model, self).__init__()
@@ -45,18 +45,17 @@ class BertPredictor(md.Model):
         return correct, indices, loss
 
 
-
 class MlmPredictor(md.Model):
     def __init__(self, model):
         super(md.Model, self).__init__()
         self.model = model.bert
-        self.head = model.mlm_head
+        self.head = model.cls
         self.softmax = nn.Softmax(dim=-1)
         self.loss_fct = nn.CrossEntropyLoss()
         
     def forward(self, input_ids, token_type_ids, attn_mask, mlm_labels, topk=10):
-        hidden_states = self.model(input_ids, token_type_ids, attn_mask)
-        mlm_logits = self.head(hidden_states)
+        hidden_states, pooled_output = self.model(input_ids, token_type_ids, attn_mask)
+        mlm_logits, _ = self.head(hidden_states, pooled_output)
         mlm_logits = self.softmax(mlm_logits)
         
         mlm_labels = mlm_labels.contiguous().view(-1)
@@ -69,8 +68,32 @@ class MlmPredictor(md.Model):
         correct = get_score(indices, mlm_labels.contiguous().view(-1,1)) # label: [masked_num x 1]
         return correct, indices, loss
     
-  
-    
+
+class SboPredictor(md.Model):
+    def __init__(self, model):
+        super(md.Model, self).__init__()
+        self.model = model.bert
+        self.head = model.cls
+        self.softmax = nn.Softmax(dim=-1)
+        self.loss_fct = nn.CrossEntropyLoss()
+        
+    def forward(self, input_ids, token_type_ids, attn_mask, mlm_labels, topk=10):
+        hidden_states, pooled_output = self.model(input_ids, token_type_ids, attn_mask)
+        mlm_logits, _ = self.head(hidden_states, pooled_output)
+        mlm_logits = self.softmax(mlm_logits)
+        
+        mlm_labels = mlm_labels.contiguous().view(-1)
+        mlm_logits = mlm_logits.contiguous().view(mlm_labels.size()[0], -1)
+        mlm_logits = mlm_logits[mlm_labels > 0, :]
+        mlm_labels = mlm_labels[mlm_labels > 0]
+        
+        loss = self.loss_fct(mlm_logits, mlm_labels)
+        _, indices = torch.topk(mlm_logits, topk) # values/indices: [masked_num x topk]
+        correct = get_score(indices, mlm_labels.contiguous().view(-1,1)) # label: [masked_num x 1]
+        return correct, indices, loss
+
+
+ # %% Multi-choice predictors   
 class BertMultiChoice(md.Model):
     def __init__(self, args, model):
         super(md.Model, self).__init__()
@@ -100,7 +123,6 @@ class BertMultiChoice(md.Model):
         return pred
 
 
-
 class MlmMultiChoice(md.Model):
     def __init__(self, args, model):
         super(md.Model, self).__init__()
@@ -109,7 +131,7 @@ class MlmMultiChoice(md.Model):
         self.hidden_size = args.hidden_size
         
     def forward(self, input_ids, token_type_ids, attn_mask, mlm_labels):
-        hidden_states = self.model(input_ids, token_type_ids, attn_mask)
+        hidden_states, _ = self.model(input_ids, token_type_ids, attn_mask)
 
         mlm_labels = mlm_labels.contiguous().view(-1)  # [3*question_num x seq_length, hidden_size]
         logits = hidden_states.contiguous().view(mlm_labels.size()[0], -1)  # [3*question_num x seq_length, hidden_size]
@@ -124,11 +146,12 @@ class MlmMultiChoice(md.Model):
         return pred
     
 
+# %% Aggregated classes
 ClozePreds = {
     "bert": BertPredictor, 
     "mlm": MlmPredictor, 
     "sop": BertPredictor, 
-    "sbo": MlmPredictor
+    "sbo": SboPredictor
 }
 
 SimPreds = {

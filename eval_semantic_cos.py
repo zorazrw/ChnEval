@@ -68,7 +68,7 @@ def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     # vocabulary options
-    parser.add_argument("--vocab_path", type=str, default="../bert-base-pytorch/vocab.txt", help="Path of the vocabulary file.")
+    parser.add_argument("--vocab_path", type=str, default="./data/vocab.txt", help="Path of the vocabulary file.")
     
     # model configuration options
     parser.add_argument("--hidden_size", type=int, default=768, help="Size of the hidden states.")
@@ -85,7 +85,7 @@ def main():
     parser.add_argument("--seq_length", type=int, default=256, help="Length of pre-processed sequences.")
 
     # io options    
-    parser.add_argument("--data_path", type=str, default="../data/meaning-of-words/semantic.txt")
+    parser.add_argument("--data_path", type=str, default="./data/knowledge/semantic.txt")
     parser.add_argument("--pretrained_model_path", type=str, default=None, help="Path of the pretrained model.")
     
     # optimizer options.
@@ -93,7 +93,7 @@ def main():
     parser.add_argument("--learning_rate", type=float, default=2e-5, help="Learning rate.")
 
     # fine-tune options.
-    parser.add_argument("--device_id", type=int, default=0, help="Single GPU assignment.")
+    parser.add_argument("--device_id", type=int, default=None, help="Single GPU assignment.")
     parser.add_argument("--target", choices=["bert", "mlm", "sbo", "sop"], default="bert")
     
     args = parser.parse_args()
@@ -105,7 +105,10 @@ def main():
     # Model initialization
     model = MODELS[args.target](args)
     predictor = SimPreds[args.target](args, model)
-    device = predictor.set_device(do_report=True)
+    if args.device_id is not None:
+        device = predictor.set_device(do_report=True)
+    else:
+        device = torch.device("cpu")
     
     dataset = create_dataset(args.data_path, tokenizer, args.seq_length)
     

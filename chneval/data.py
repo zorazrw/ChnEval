@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Data set loaders for BERT and MLM styles
+Data set creator classes for BERT-variants
 
 @author: Zhiruo Wang
 """
 
-
-from __future__ import absolute_import
 import os
 import random
 import pickle
 from multiprocessing import Pool
-from tokenizer import FullTokenizer
-
+from .tokenizer import FullTokenizer
 
 
 def count_lines(corpus_path):

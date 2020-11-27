@@ -28,11 +28,13 @@ def create_dataset(test_path, tokenizer, seq_length=128):
                     break
             if not answer:
                 continue
-            instance = tokenizer.tokenize_for_eval(query=query, 
-                                                   answer=answer, 
-                                                   max_length=seq_length, 
-                                                   do_padding=True)
-            # instance = query_ids, token_type_ids, attn_mask, mlm_labels
+            instance = tokenizer.tokenize_for_eval(
+                query=query, 
+                answer=answer, 
+                max_length=seq_length, 
+                do_padding=True
+            )
+            # instance = (query_ids, token_type_ids, attn_mask, mlm_labels)
             if instance:
                 dataset.append(instance)
     # print("Successfully built dataset of length {}!".format(len(dataset)))
@@ -64,11 +66,11 @@ def main():
     parser.add_argument("--topk",type=int, default=10,  help="Top k choice for cloze tasks.")
 
     # io options    
-    parser.add_argument("--data_path", type=str, default="../data/encyclopedia-fact/fact.txt")
+    parser.add_argument("--data_path", type=str, default="./data/knowledge/fact.txt")
     parser.add_argument("--pretrained_model_path", type=str, default=None, help="Path of the pretrained model.")
 
     # fine-tune options.
-    parser.add_argument("--device_id", type=int, default=0, help="Single GPU assignment.")
+    parser.add_argument("--device_id", type=int, default=None, help="Single GPU assignment.")
     parser.add_argument("--target", choices=["bert", "mlm", "sbo", "sop"], default="bert")
     
     args = parser.parse_args()
@@ -78,9 +80,13 @@ def main():
     args.vocab_size = len(tokenizer.vocab)
 
     # Model initialization
-    model = MODELS[args.target](args)    
+    model = MODELS[args.target](args)  
+    # model.init_weights(model_path=args.pretrained_model_path)  
     predictor = ClozePreds[args.target](model)
-    device = predictor.set_device(do_report=True)
+    if args.device_id is not None:
+        device = predictor.set_device(do_report=True)
+    else:
+        device = torch.device("cpu")
     
     dataset = create_dataset(args.data_path, tokenizer, seq_length=args.seq_length)
         
@@ -105,7 +111,7 @@ def main():
                 label_batch.to(device), 
                 topk=args.topk
             )
-            corrects += correct        
+            corrects += correct.item()  
     print("{} right predictions out of {} instances".format(corrects, instances_num))
     acc = corrects / instances_num
     print("Correct rate: {:.4f}\n".format(acc))
