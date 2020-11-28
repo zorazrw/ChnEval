@@ -19,7 +19,7 @@ Meanwhile, alter your model by specify the `--pretrained_model_path` argument, a
 
 
 ## Data Set
-We organized four data sets concerning knowledge of different aspects. [Fact](https://github.com/ZhiruoWang/ChnEval/blob/master/data/knowledge/fact.txt) and [Common Sense](https://github.com/ZhiruoWang/ChnEval/blob/master/data/knowledge/commonsense.txt) examines the world knowledge within models, while [Syntactic](https://github.com/ZhiruoWang/ChnEval/tree/master/data/knowledge/syntax) and [Semantic](https://github.com/ZhiruoWang/ChnEval/blob/master/data/knowledge/semantic.txt) data focus on the nlignuistic knowledge.
+We organized four data sets concerning knowledge of different aspects. [Fact](https://github.com/ZhiruoWang/ChnEval/blob/master/data/knowledge/fact.txt) and [Common Sense](https://github.com/ZhiruoWang/ChnEval/blob/master/data/knowledge/commonsense.txt) examines the world knowledge within models, while [Syntactic](https://github.com/ZhiruoWang/ChnEval/tree/master/data/knowledge/syntax) and [Semantic](https://github.com/ZhiruoWang/ChnEval/blob/master/data/knowledge/semantic.txt) data focus on the lignuistic knowledge.
 
 By default, these data sets come along with this project, and posit under the `./ChnEval/data/knowledge/` directory.
 
