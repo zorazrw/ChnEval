@@ -31,7 +31,7 @@ For a fair comparison between BERT-variants, we performed incremental pre-traini
 * [MLM + SOP](https://drive.google.com/file/d/19_O0UEQx42P9awcUDVdITjhAuBwWcxcj/view?usp=sharing)
 * [MLM + NSP](https://drive.google.com/file/d/1zS0jrw1-7K7oElBBRHP1LgjDZpJn3Hhg/view?usp=sharing)
   
-Also, we include (comparable) sota pre-trained Chinese Language Models:
+Also, we include (comparable) sota pre-trained Chinese Language Models from [CLUE](https://github.com/CLUEbenchmark/CLUE):
 * [BERT](https://drive.google.com/file/d/1xrBCC2gzYtlp2veCN2LSwhI12ZIZBXPV/view?usp=sharing): BERT-base-chinese in PyTorch.
 * [BERT-wwm](https://drive.google.com/file/d/1snprTrHIa3EcJdm4IZGbtuWAPzg-sD1c/view?usp=sharing): BERT using the whole-word-masking strategy.
 * [BERT-wwm-ext](https://drive.google.com/file/d/15c4fNsIiY_t8gNHJ4ag8tL0MtzGVJ3xZ/view?usp=sharing): BERT-wwm pre-trained using additional external corpus.
