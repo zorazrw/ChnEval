@@ -25,14 +25,14 @@ By default, these data sets come along with this project, and posit under the `.
 
 
 ## Model
-For a fair comparison between BERT-variants, we performed incremental pre-training from BERT-base-chinese using four different objective settings, i.e. MLM, MLM+SBO, MLM+SOP, MLM+NSP. The 50w-step checkpoints can be downloaded from:
-* [MLM](https://drive.google.com/file/d/1m5OhD6v8PceVBIqHocaMHlZMZ_6NRYdC/view?usp=sharing)
-* [MLM + SBO](https://drive.google.com/file/d/136c5QtERePqcUEUZLDR1rwWjQp-eqNeH/view?usp=sharing)
-* [MLM + SOP](https://drive.google.com/file/d/19_O0UEQx42P9awcUDVdITjhAuBwWcxcj/view?usp=sharing)
-* [MLM + NSP](https://drive.google.com/file/d/1zS0jrw1-7K7oElBBRHP1LgjDZpJn3Hhg/view?usp=sharing)
+For a fair comparison between BERT-variants, we performed incremental pre-training from BERT-base-chinese using four different objective settings, i.e. MLM, MLM+SBO, MLM+SOP, MLM+NSP. The 50w-step checkpoints can be downloaded from (google drive/bnu cloud drive):
+* MLM ([google](https://drive.google.com/file/d/1m5OhD6v8PceVBIqHocaMHlZMZ_6NRYdC/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/lu8ARy))
+* MLM + SBO([google](https://drive.google.com/file/d/136c5QtERePqcUEUZLDR1rwWjQp-eqNeH/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/2nfi3O))
+* MLM + SOP ([google](https://drive.google.com/file/d/19_O0UEQx42P9awcUDVdITjhAuBwWcxcj/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/Y0TMiz))
+* MLM + NSP ([google](https://drive.google.com/file/d/1zS0jrw1-7K7oElBBRHP1LgjDZpJn3Hhg/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/aoMMFC))
   
 Also, we include (comparable) sota pre-trained Chinese Language Models from [CLUE](https://github.com/CLUEbenchmark/CLUE):
-* [BERT](https://drive.google.com/file/d/1xrBCC2gzYtlp2veCN2LSwhI12ZIZBXPV/view?usp=sharing): BERT-base-chinese in PyTorch.
-* [BERT-wwm](https://drive.google.com/file/d/1snprTrHIa3EcJdm4IZGbtuWAPzg-sD1c/view?usp=sharing): BERT using the whole-word-masking strategy.
-* [BERT-wwm-ext](https://drive.google.com/file/d/15c4fNsIiY_t8gNHJ4ag8tL0MtzGVJ3xZ/view?usp=sharing): BERT-wwm pre-trained using additional external corpus.
-* [RoBERTa-wwm-ext](https://drive.google.com/file/d/1mMnMY8ZPzRTBhYYDzfxERRhOSPgifLEG/view?usp=sharing): a Chinese version RoBERTa using additional external corpus.
+* BERT ([google](https://drive.google.com/file/d/1xrBCC2gzYtlp2veCN2LSwhI12ZIZBXPV/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/DuUpHu)): BERT-base-chinese in PyTorch.
+* BERT-wwm ([google](https://drive.google.com/file/d/1snprTrHIa3EcJdm4IZGbtuWAPzg-sD1c/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/R09Du8)): BERT using the whole-word-masking strategy.
+* BERT-wwm-ext ([google](https://drive.google.com/file/d/15c4fNsIiY_t8gNHJ4ag8tL0MtzGVJ3xZ/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/Ou6oov)): BERT-wwm pre-trained using additional external corpus.
+* RoBERTa-wwm-ext ([google](https://drive.google.com/file/d/1mMnMY8ZPzRTBhYYDzfxERRhOSPgifLEG/view?usp=sharing)[bnu](https://pan.bnu.edu.cn/l/lu8ARS)): a Chinese version RoBERTa using additional external corpus.
