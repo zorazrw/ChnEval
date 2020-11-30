@@ -35,4 +35,4 @@ Also, we include (comparable) sota pre-trained Chinese Language Models from [CLU
 * BERT ([google](https://drive.google.com/file/d/1xrBCC2gzYtlp2veCN2LSwhI12ZIZBXPV/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/DuUpHu)): BERT-base-chinese in PyTorch.
 * BERT-wwm ([google](https://drive.google.com/file/d/1snprTrHIa3EcJdm4IZGbtuWAPzg-sD1c/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/R09Du8)): BERT using the whole-word-masking strategy.
 * BERT-wwm-ext ([google](https://drive.google.com/file/d/15c4fNsIiY_t8gNHJ4ag8tL0MtzGVJ3xZ/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/Ou6oov)): BERT-wwm pre-trained using additional external corpus.
-* RoBERTa-wwm-ext ([google](https://drive.google.com/file/d/1mMnMY8ZPzRTBhYYDzfxERRhOSPgifLEG/view?usp=sharing)[bnu](https://pan.bnu.edu.cn/l/lu8ARS)): a Chinese version RoBERTa using additional external corpus.
+* RoBERTa-wwm-ext ([google](https://drive.google.com/file/d/1mMnMY8ZPzRTBhYYDzfxERRhOSPgifLEG/view?usp=sharing)/[bnu](https://pan.bnu.edu.cn/l/lu8ARS)): a Chinese version RoBERTa using additional external corpus.
