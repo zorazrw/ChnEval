@@ -1,6 +1,6 @@
 # Instrinsic Knowledge Evaluation on Chinese Language Models
 
-Code, data, and models for intrinsic knowledge evalutation on Chinese Language Models introduced in the paper [Intrinsic Knowledge Evaluation on Chinese Language Models]()
+Code, data, and models for intrinsic knowledge evalutation on Chinese Language Models introduced in the paper [Intrinsic Knowledge Evaluation on Chinese Language Models](https://arxiv.org/abs/2011.14277)
 
 
 
